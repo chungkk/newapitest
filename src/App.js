@@ -36,8 +36,8 @@ function App() {
 
   }
 
-  const onRemoveMovie = (id) => async () => {
-    const list = await removeMovie(id);
+  const onRemoveMovie = (kk) => async () => {
+    const list = await removeMovie(kk);
     onGetMovie()
   }
 
@@ -53,19 +53,18 @@ function App() {
     const list = await editMovies(cc);
     setInputName(item)
     setInputYear(bb)
-    console.log('get id', cc)
+
   }
 
 
   const onEditMovies = async () => {
-    const list = await editMovies(
-      {
-        "name": inputName,
-        "releaseYear": inputYear
-      }
-    )
+    const list = await editMovies({
+      "name": inputName,
+      "releaseYear": inputYear
+    })
     onGetMovie()
   }
+
   return (
     <div className="App">
       <button

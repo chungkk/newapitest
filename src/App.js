@@ -1,25 +1,40 @@
+
 import logo from './logo.svg';
 import './App.css';
+import { getMovie, addMovies, removeMovie } from './Servers'
+import { useState } from 'react';
+
 
 function App() {
+  const [listMv, setListMv] = useState([]);
+  const onGetMovie = async () => {
+
+    // const list = getMovie().then(data => console.log('data', data ))
+    const list = await getMovie()
+    console.log('list', list.data)
+    setListMv(list.data)
+  }
+  const onUpdateMovie = async () => {
+    const list = await addMovies({
+      "name": "Mommie Dearest 2345",
+      "releaseYear": "1999"
+    })
+
+    console.log('list', list)
+  }
+  const onRemoveMovie = (id) => async () => {
+    const list = await removeMovie(id)
+  }
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div style={{ padding: 50 }}
+        onClick={onGetMovie}>Get Movie</div>
+      {listMv?.map(e => <div>{e.name} - <span onClick={onRemoveMovie(e.id)}>- Delete</span></div>)}
+      <div style={{ padding: 50 }}
+        onClick={onUpdateMovie}>Update Movie</div>
     </div>
   );
 }
 
 export default App;
+
